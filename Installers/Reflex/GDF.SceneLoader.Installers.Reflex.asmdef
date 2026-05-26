@@ -1,0 +1,24 @@
+{
+    "name": "GDF.SceneLoader.Installers.Reflex",
+    "references": [
+        "GDF.SceneLoader",
+        "Reflex"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "SCENE_LOADER_REFLEX"
+    ],
+    "versionDefines": [
+        {
+            "name": "com.gustavopsantos.reflex",
+            "expression": "",
+            "define": "SCENE_LOADER_REFLEX"
+        }
+    ],
+    "noEngineReferences": false
+}

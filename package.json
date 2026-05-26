@@ -1,0 +1,19 @@
+{
+  "name": "com.gdf.scene-loader",
+  "version": "1.0.0",
+  "displayName": "GDF Scene Loader",
+  "description": "Addressables-backed scene loading and transition service with exclusive single-scene transitions and parallel additive scene loads.",
+  "unity": "6000.0",
+  "author": {
+    "name": "GDF"
+  },
+  "dependencies": {
+    "com.unity.addressables": "2.8.1"
+  },
+  "keywords": [
+    "scene",
+    "addressables",
+    "loading",
+    "transition"
+  ]
+}

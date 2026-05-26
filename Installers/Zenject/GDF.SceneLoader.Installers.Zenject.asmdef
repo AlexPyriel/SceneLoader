@@ -1,0 +1,24 @@
+{
+    "name": "GDF.SceneLoader.Installers.Zenject",
+    "references": [
+        "GDF.SceneLoader",
+        "Zenject"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "SCENE_LOADER_ZENJECT"
+    ],
+    "versionDefines": [
+        {
+            "name": "com.mathijsbakker.extenject",
+            "expression": "",
+            "define": "SCENE_LOADER_ZENJECT"
+        }
+    ],
+    "noEngineReferences": false
+}

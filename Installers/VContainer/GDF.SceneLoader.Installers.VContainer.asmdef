@@ -1,0 +1,24 @@
+{
+    "name": "GDF.SceneLoader.Installers.VContainer",
+    "references": [
+        "GDF.SceneLoader",
+        "VContainer"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "SCENE_LOADER_VCONTAINER"
+    ],
+    "versionDefines": [
+        {
+            "name": "jp.hadashikick.vcontainer",
+            "expression": "",
+            "define": "SCENE_LOADER_VCONTAINER"
+        }
+    ],
+    "noEngineReferences": false
+}
