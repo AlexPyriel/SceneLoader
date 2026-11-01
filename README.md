@@ -166,3 +166,7 @@ public sealed class SceneLoaderReflexInstaller : MonoBehaviour, IInstaller
     }
 }
 ```
+
+## License
+
+MIT. See `LICENSE.md`.
