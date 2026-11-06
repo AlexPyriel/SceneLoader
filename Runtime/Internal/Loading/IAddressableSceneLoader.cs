@@ -7,9 +7,9 @@ using UnityEngine.SceneManagement;
 namespace SceneLoader.Internal.Loading
 {
     /// <summary>
-    /// Defines the internal low-level Addressables scene loading operations.
+    /// Low-level Addressables scene operations behind <see cref="ISceneLoaderService"/>; replace it to load scenes from another source.
     /// </summary>
-    internal interface IAddressableSceneLoader
+    public interface IAddressableSceneLoader
     {
         /// <summary>
         /// Loads the target scene and returns its Addressables handle.

@@ -36,7 +36,7 @@ Assembly name: `GDF.SceneLoader`
 Add this dependency to `Packages/manifest.json`:
 
 ```json
-"com.gdf.scene-loader": "https://github.com/AlexPyriel/SceneLoader.git#v1.0.0"
+"com.gdf.scene-loader": "https://github.com/AlexPyriel/SceneLoader.git#v2.0.0"
 ```
 
 For development tracking (not recommended for production), use `#main` instead of a tag.
@@ -44,12 +44,12 @@ For development tracking (not recommended for production), use `#main` instead o
 You can also install it from Unity Package Manager:
 
 - `Window -> Package Manager -> + -> Add package from git URL...`
-- `https://github.com/AlexPyriel/SceneLoader.git#v1.0.0`
+- `https://github.com/AlexPyriel/SceneLoader.git#v2.0.0`
 
 ## Quick Start
 
 1. Resolve the target `AssetReference` in your application layer.
-2. Register the package through the DI installer that matches your project's container.
+2. Register the package: `SceneLoaderVContainerInstaller` on VContainer, or the bindings from [Using with Zenject / Reflex](#using-with-zenject--reflex).
 3. Call `LoadScene`.
 
 ```csharp
@@ -120,9 +120,11 @@ In most cases, no explicit `.asmdef` reference is required.
 
 ## DI Policy
 
-The package exposes `ISceneLoadingProgress` for scene loading progress updates and keeps the writable progress sink
-internal.
-Use the DI installer that matches your project's container to wire the package services.
+The package exposes `ISceneLoadingProgress` for scene loading progress updates. The implementations
+(`SceneLoaderService`, `AddressableSceneLoader`, `UnitySceneActivationState`, `SceneLoadingProgress`) and the seams
+they depend on (`IAddressableSceneLoader`, `ISceneActivationState`, `ISceneLoadingProgressReporter`) are public, so
+any DI container can wire them and a project can replace the Addressables loader. Load execution and state tracking
+stay internal.
 
 Scene reference resolution stays in the host project. Resolve scene keys or enums to `AssetReference` in the outer flow,
 then pass the resolved reference into the package API.
@@ -137,34 +139,33 @@ Use the VContainer installer when your project uses VContainer. UPM installs are
 new SceneLoader.Installers.VContainer.SceneLoaderVContainerInstaller().Install(builder);
 ```
 
-### Zenject
+## Using with Zenject / Reflex
 
-Use the Zenject installer when your project uses Zenject or Extenject. UPM installs are enabled automatically when the
-`com.mathijsbakker.extenject` package is present. Source-based or asset-based installs require the
-`SCENE_LOADER_ZENJECT` scripting define and a `Zenject` assembly in the project.
+The package ships only a VContainer installer. Other containers bind the public types directly; one
+`SceneLoadingProgress` instance serves both the read side (`ISceneLoadingProgress`) and the loader's sink.
+
+Zenject (`MonoInstaller` or `Installer`):
 
 ```csharp
-SceneLoader.Installers.Zenject.SceneLoaderZenjectInstaller.Install(Container);
+using SceneLoader.Internal;
+using SceneLoader.Internal.Loading;
+
+Container.BindInterfacesTo<SceneLoadingProgress>().AsSingle();
+Container.Bind<IAddressableSceneLoader>().To<AddressableSceneLoader>().AsSingle();
+Container.Bind<ISceneActivationState>().To<UnitySceneActivationState>().AsSingle();
+Container.Bind<ISceneLoaderService>().To<SceneLoaderService>().AsSingle();
 ```
 
-### Reflex
-
-Use the Reflex installer when your project uses Reflex. UPM installs are enabled automatically when the
-`com.gustavopsantos.reflex` package is present. Source-based or asset-based installs require the
-`SCENE_LOADER_REFLEX` scripting define and a `Reflex` assembly in the project.
-
-Add `SceneLoader.Installers.Reflex.SceneLoaderReflexInstaller` to your Reflex `ProjectScope` prefab. Reflex discovers
-`IInstaller` components on the scope automatically and installs the package services when the scope is built.
+Reflex (`IInstaller`):
 
 ```csharp
-// Add this component to your Reflex ProjectScope prefab.
-public sealed class SceneLoaderReflexInstaller : MonoBehaviour, IInstaller
-{
-    public void InstallBindings(ContainerBuilder builder)
-    {
-        // SceneLoader package services are registered here.
-    }
-}
+using SceneLoader.Internal;
+using SceneLoader.Internal.Loading;
+
+builder.AddSingleton(typeof(SceneLoadingProgress), typeof(ISceneLoadingProgress), typeof(ISceneLoadingProgressReporter));
+builder.AddSingleton(typeof(AddressableSceneLoader), typeof(IAddressableSceneLoader));
+builder.AddSingleton(typeof(UnitySceneActivationState), typeof(ISceneActivationState));
+builder.AddSingleton(typeof(SceneLoaderService), typeof(ISceneLoaderService));
 ```
 
 ## License

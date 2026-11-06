@@ -11,15 +11,15 @@ namespace SceneLoader.Internal.Loading
     /// <summary>
     /// Performs low-level scene loading, activation, and unloading operations via Addressable.
     /// </summary>
-    internal sealed class AddressableSceneLoader : IAddressableSceneLoader
+    public sealed class AddressableSceneLoader : IAddressableSceneLoader
     {
         private readonly ISceneLoadingProgressReporter _sceneLoadingProgressReporter;
 
         /// <summary>
-        /// Creates the internal scene loader with a progress receiver.
+        /// Creates the scene loader with a progress receiver.
         /// </summary>
         /// <param name="sceneLoadingProgressReporter">Package-owned writable progress sink.</param>
-        internal AddressableSceneLoader(ISceneLoadingProgressReporter sceneLoadingProgressReporter)
+        public AddressableSceneLoader(ISceneLoadingProgressReporter sceneLoadingProgressReporter)
         {
             _sceneLoadingProgressReporter = sceneLoadingProgressReporter;
         }

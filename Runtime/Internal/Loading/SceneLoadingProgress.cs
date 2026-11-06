@@ -5,7 +5,7 @@ namespace SceneLoader.Internal.Loading
     /// <summary>
     /// Default scene loading progress implementation for the package.
     /// </summary>
-    internal sealed class SceneLoadingProgress : ISceneLoadingProgress, ISceneLoadingProgressReporter
+    public sealed class SceneLoadingProgress : ISceneLoadingProgress, ISceneLoadingProgressReporter
     {
         /// <inheritdoc />
         public event Action<float> ProgressChanged;

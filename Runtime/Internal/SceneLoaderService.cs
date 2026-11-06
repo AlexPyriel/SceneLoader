@@ -13,7 +13,7 @@ namespace SceneLoader.Internal
     /// <summary>
     /// Implements <see cref="ISceneLoaderService"/> and performs sequential scene loading.
     /// </summary>
-    internal sealed class SceneLoaderService : ISceneLoaderService
+    public sealed class SceneLoaderService : ISceneLoaderService
     {
         private readonly SceneLoadRegistry _sceneRegistry = new();
         private readonly SceneLoadExecutor _sceneLoadExecutor;
@@ -22,7 +22,10 @@ namespace SceneLoader.Internal
         private readonly CancellationToken _disposeToken;
         private int _isDisposed;
 
-        internal SceneLoaderService(IAddressableSceneLoader sceneLoadService, ISceneActivationState sceneActivationState)
+        /// <summary>Creates the service over the Addressables loader and the active-scene probe.</summary>
+        /// <param name="sceneLoadService">Low-level scene operations, normally <see cref="AddressableSceneLoader"/>.</param>
+        /// <param name="sceneActivationState">Active-scene probe, normally <see cref="UnitySceneActivationState"/>.</param>
+        public SceneLoaderService(IAddressableSceneLoader sceneLoadService, ISceneActivationState sceneActivationState)
         {
             _disposeToken = _disposeCancellationTokenSource.Token;
             _sceneActivationState = sceneActivationState ?? throw new ArgumentNullException(nameof(sceneActivationState));
